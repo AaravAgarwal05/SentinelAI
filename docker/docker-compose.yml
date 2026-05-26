@@ -1,0 +1,33 @@
+services:
+
+  rabbitmq:
+    image: rabbitmq:3-management
+
+    container_name: rabbitmq
+
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  api-service:
+    build:
+      context: ..
+      dockerfile: services/api_service/Dockerfile
+
+    container_name: sentinel-api
+
+    ports:
+      - "8000:8000"
+
+    depends_on:
+      - rabbitmq
+
+  incident-worker:
+    build:
+      context: ..
+      dockerfile: services/incident_worker/Dockerfile
+
+    container_name: sentinel-worker
+
+    depends_on:
+      - rabbitmq

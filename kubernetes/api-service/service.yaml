@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: sentinel-api-service
+
+  labels:
+    app: sentinel-api
+
+spec:
+
+  selector:
+    app: sentinel-api
+
+  ports:
+    - name: http
+      port: 8000
+      targetPort: 8000
+
+  type: NodePort

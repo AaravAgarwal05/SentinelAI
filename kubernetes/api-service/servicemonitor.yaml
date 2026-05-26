@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+
+metadata:
+  name: sentinel-api-monitor
+
+  labels:
+    release: monitoring
+
+spec:
+
+  selector:
+    matchLabels:
+      app: sentinel-api
+
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 15s

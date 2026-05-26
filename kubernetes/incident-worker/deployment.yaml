@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: sentinel-worker
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: sentinel-worker
+
+  template:
+
+    metadata:
+      labels:
+        app: sentinel-worker
+
+    spec:
+
+      containers:
+        - name: sentinel-worker
+
+          image: sentinel-worker:v1
+
+          imagePullPolicy: Never
