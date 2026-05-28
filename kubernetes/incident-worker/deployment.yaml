@@ -12,16 +12,17 @@ spec:
       app: sentinel-worker
 
   template:
-
     metadata:
       labels:
         app: sentinel-worker
 
     spec:
-
       containers:
         - name: sentinel-worker
 
-          image: sentinel-worker:v1
-
+          image: sentinel-worker:latest
           imagePullPolicy: Never
+
+          envFrom:
+            - secretRef:
+                name: sentinel-env

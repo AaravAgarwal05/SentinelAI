@@ -4,9 +4,6 @@ kind: Deployment
 metadata:
   name: sentinel-api
 
-  labels:
-   app: sentinel-api
-
 spec:
   replicas: 1
 
@@ -15,19 +12,20 @@ spec:
       app: sentinel-api
 
   template:
-
     metadata:
       labels:
         app: sentinel-api
 
     spec:
-
       containers:
         - name: sentinel-api
 
-          image: sentinel-api:v1
-
+          image: sentinel-api:latest
           imagePullPolicy: Never
 
           ports:
             - containerPort: 8000
+
+          envFrom:
+            - secretRef:
+                name: sentinel-env

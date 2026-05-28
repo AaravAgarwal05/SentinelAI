@@ -8,7 +8,6 @@ metadata:
     app: sentinel-api
 
 spec:
-
   selector:
     app: sentinel-api
 
