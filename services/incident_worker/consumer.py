@@ -1,6 +1,7 @@
 import time
 import json
 
+from shared.logger import get_logger
 from shared.models import Incident
 from shared.rabbitmq_client import create_connection
 from shared.config import (
@@ -8,7 +9,9 @@ from shared.config import (
     INCIDENT_QUEUE
 )
 
-print("Starting SentinelAI Incident Worker...")
+logger = get_logger(__name__)
+
+logger.info("Starting SentinelAI Incident Worker...")
 
 connection = create_connection()
 
@@ -39,23 +42,11 @@ def callback(ch, method, properties, body):
 
     incident = Incident(**incident_data)
 
-    print("\n========== INCIDENT RECEIVED ==========")
+    logger.info(f"Processing incident: {incident}")
 
-    print(f"Service: {incident.service}")
+    time.sleep(2)
 
-    print(f"Severity: {incident.severity}")
-
-    print(f"Event Type: {incident.event_type}")
-
-    print(f"Namespace: {incident.namespace}")
-
-    print(f"Message: {incident.message}")
-
-    print(f"Timestamp: {incident.timestamp}")
-
-    time.sleep(3)
-
-    print("Incident processed")
+    logger.info(f"Finished processing incident: {incident.service}")
 
     ch.basic_ack(
         delivery_tag=method.delivery_tag
@@ -66,6 +57,6 @@ channel.basic_consume(
     on_message_callback=callback
 )
 
-print("Worker listening for incidents...")
+logger.info("Waiting for incidents...")
 
 channel.start_consuming()

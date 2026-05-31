@@ -7,6 +7,9 @@ from shared.config import (
     RABBITMQ_USERNAME,
     RABBITMQ_PASSWORD
 )
+from shared.logger import get_logger
+
+logger = get_logger(__name__)
 
 def create_connection():
 
@@ -26,12 +29,12 @@ def create_connection():
         try:
             connection = pika.BlockingConnection(parameters)
 
-            print("Connected to RabbitMQ")
+            logger.info("Connected to RabbitMQ")
 
             return connection
 
         except pika.exceptions.AMQPConnectionError:
 
-            print("RabbitMQ not ready, retrying in 5 seconds...")
+            logger.warning("RabbitMQ not ready, retrying in 5 seconds...")
 
             time.sleep(5)
