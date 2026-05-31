@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: prometheus
+  namespace: monitoring
+
+  labels:
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/component: monitoring
+    app.kubernetes.io/part-of: sentinelai
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus
+
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: prometheus
+
+    spec:
+      containers:
+        - name: prometheus
+
+          image: prom/prometheus:v3.4.1
+
+          args:
+            - --config.file=/etc/prometheus/prometheus.yml
+            - --storage.tsdb.path=/prometheus
+
+          ports:
+            - containerPort: 9090
+
+          volumeMounts:
+            - name: config
+              mountPath: /etc/prometheus
+
+            - name: storage
+              mountPath: /prometheus
+
+      volumes:
+        - name: config
+          configMap:
+            name: prometheus-config
+
+        - name: storage
+          persistentVolumeClaim:
+            claimName: prometheus-pvc
