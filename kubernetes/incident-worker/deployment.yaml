@@ -3,6 +3,7 @@ kind: Deployment
 
 metadata:
   name: sentinel-worker
+  namespace: sentinel
 
 spec:
   replicas: 1

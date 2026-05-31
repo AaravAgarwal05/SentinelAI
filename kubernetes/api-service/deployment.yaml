@@ -3,6 +3,7 @@ kind: Deployment
 
 metadata:
   name: sentinel-api
+  namespace: sentinel
 
 spec:
   replicas: 1

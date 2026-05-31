@@ -3,6 +3,7 @@ kind: Service
 
 metadata:
   name: sentinel-api-service
+  namespace: sentinel
 
   labels:
     app: sentinel-api
