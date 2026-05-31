@@ -4,18 +4,22 @@ kind: Deployment
 metadata:
   name: sentinel-api
   namespace: sentinel
+  labels:
+    app.kubernetes.io/name: sentinel-api
+    app.kubernetes.io/component: api
+    app.kubernetes.io/part-of: sentinelai
 
 spec:
   replicas: 1
 
   selector:
     matchLabels:
-      app: sentinel-api
+      app.kubernetes.io/name: sentinel-api
 
   template:
     metadata:
       labels:
-        app: sentinel-api
+        app.kubernetes.io/name: sentinel-api
 
     spec:
       containers:

@@ -4,13 +4,12 @@ kind: Service
 metadata:
   name: sentinel-api-service
   namespace: sentinel
-
   labels:
-    app: sentinel-api
+    app.kubernetes.io/name: sentinel-api
 
 spec:
   selector:
-    app: sentinel-api
+    app.kubernetes.io/name: sentinel-api
 
   ports:
     - name: http

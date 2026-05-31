@@ -4,18 +4,22 @@ kind: Deployment
 metadata:
   name: sentinel-worker
   namespace: sentinel
+  labels:
+    app.kubernetes.io/name: sentinel-worker
+    app.kubernetes.io/component: worker
+    app.kubernetes.io/part-of: sentinelai
 
 spec:
   replicas: 1
 
   selector:
     matchLabels:
-      app: sentinel-worker
+      app.kubernetes.io/name: sentinel-worker
 
   template:
     metadata:
       labels:
-        app: sentinel-worker
+        app.kubernetes.io/name: sentinel-worker
 
     spec:
       containers:
