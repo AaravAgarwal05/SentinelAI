@@ -2,10 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-  name: sentinel-incident-worker
+  name: sentinel-remediation-worker
   namespace: sentinel
   labels:
-    app.kubernetes.io/name: sentinel-incident-worker
+    app.kubernetes.io/name: sentinel-remediation-worker
     app.kubernetes.io/component: worker
     app.kubernetes.io/part-of: sentinelai
 
@@ -14,18 +14,18 @@ spec:
 
   selector:
     matchLabels:
-      app.kubernetes.io/name: sentinel-incident-worker
+      app.kubernetes.io/name: sentinel-remediation-worker
 
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: sentinel-incident-worker
+        app.kubernetes.io/name: sentinel-remediation-worker
 
     spec:
       containers:
-        - name: sentinel-incident-worker
+        - name: sentinel-remediation-worker
 
-          image: sentinel-incident-worker:latest
+          image: sentinel-remediation-worker:latest
           imagePullPolicy: Never
 
           envFrom:

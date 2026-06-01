@@ -1,13 +1,16 @@
 import os
 
-RABBITMQ_HOST = os.getenv("RABBITMQ_HOST")
-RABBITMQ_PORT = int(os.getenv("RABBITMQ_PORT"))
 
-RABBITMQ_USERNAME = os.getenv("RABBITMQ_USERNAME")
-RABBITMQ_PASSWORD = os.getenv("RABBITMQ_PASSWORD")
+def get_env(name: str) -> str:
+    value = os.getenv(name)
 
-EXCHANGE_NAME = os.getenv("EXCHANGE_NAME")
+    if value is None:
+        raise ValueError(
+            f"Environment variable '{name}' not found"
+        )
 
-INCIDENT_ROUTING_KEY = os.getenv("INCIDENT_ROUTING_KEY")
+    return value
 
-INCIDENT_QUEUE = os.getenv("INCIDENT_QUEUE")
+
+def get_env_int(name: str) -> int:
+    return int(get_env(name))

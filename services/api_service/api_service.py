@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from fastapi.responses import Response
-
 from prometheus_client import (
     Counter,
     generate_latest
@@ -8,14 +7,15 @@ from prometheus_client import (
 
 import pika
 
+from shared.logger import get_logger
+from shared.models.incident import Incident
 from shared.rabbitmq_client import create_connection
-
 from shared.config import (
-    EXCHANGE_NAME,
-    INCIDENT_ROUTING_KEY
+    get_env,
+    get_env_int
 )
 
-from shared.models import Incident
+logger = get_logger(__name__)
 
 app = FastAPI()
 
@@ -23,6 +23,9 @@ incident_counter = Counter(
     'sentinel_incidents_total',
     'Total incidents received'
 )
+
+EXCHANGE_NAME = get_env("EXCHANGE_NAME")
+INCIDENT_ROUTING_KEY = get_env("INCIDENT_ROUTING_KEY")
 
 @app.get("/")
 def health():
@@ -44,6 +47,12 @@ def create_incident(incident: Incident):
         exchange=EXCHANGE_NAME,
         exchange_type='topic',
         durable=True
+    )
+
+    logger.info(
+        f"Publishing incident | "
+        f"service={incident.service} "
+        f"severity={incident.severity}"
     )
 
     channel.basic_publish(

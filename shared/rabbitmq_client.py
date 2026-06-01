@@ -2,14 +2,17 @@ import pika
 import time 
 
 from shared.config import (
-    RABBITMQ_HOST,
-    RABBITMQ_PORT,
-    RABBITMQ_USERNAME,
-    RABBITMQ_PASSWORD
+    get_env,
+    get_env_int
 )
 from shared.logger import get_logger
 
 logger = get_logger(__name__)
+
+RABBITMQ_HOST = get_env("RABBITMQ_HOST")
+RABBITMQ_PORT = get_env_int("RABBITMQ_PORT")
+RABBITMQ_USERNAME = get_env("RABBITMQ_USERNAME")
+RABBITMQ_PASSWORD = get_env("RABBITMQ_PASSWORD")
 
 def create_connection():
 

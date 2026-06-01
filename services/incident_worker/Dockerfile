@@ -10,4 +10,4 @@ COPY . .
 
 ENV PYTHONUNBUFFERED=1
 
-CMD ["python", "-m", "services.incident_worker.consumer"]
+CMD ["python", "-m", "services.incident_worker.incident_worker"]

@@ -6,7 +6,7 @@ PROJECT_ROOT="$(git rev-parse --show-toplevel)"
 cd "$PROJECT_ROOT"
 
 set -a
-source .env.k8s
+source env/dev/rabbitmq.env
 set +a
 
 kubectl delete secret rabbitmq-secret \

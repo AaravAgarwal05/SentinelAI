@@ -8,7 +8,6 @@ class Incident(BaseModel):
     event_type: str
     namespace: str
     message: str
-
     timestamp: datetime = Field(
         default_factory=lambda: datetime.now(UTC)
     )
